@@ -1,12 +1,12 @@
 #include "HASH.h"
 #include "linked.h"
 
-void Hash_Initialize(Hash_Table *table, int M) {
-
-    for (int i = 0; i < M; i++){
-        MakeEmpty_List(&table[i]);
-    } 
-}
+void Insere(ingredient x, int *weights, Hash_Table table) {
+    
+    if (Pesquisa(x.name, weights, table) == NULL)
+    List_Append(x, &table[h(x.name, weights)]);
+    else printf(" Registro ja  esta  presente\n");
+} 
 
 void Imprime(Hash_Table *table, int M) {
     
@@ -19,6 +19,13 @@ void Imprime(Hash_Table *table, int M) {
         
     }
 
+}
+
+void Hash_Initialize(Hash_Table *table, int M) {
+
+    for (int i = 0; i < M; i++){
+        MakeEmpty_List(&table[i]);
+    } 
 }
 
 void GeraPesos(int *pesos, int n) {
