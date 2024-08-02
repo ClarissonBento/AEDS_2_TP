@@ -10,7 +10,7 @@
 
 typedef struct ingredient{
     char *name;
-    // colocar a lista aqui
+    //lista
 }ingredient;
 
 

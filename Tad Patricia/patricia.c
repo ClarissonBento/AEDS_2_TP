@@ -4,14 +4,12 @@
 #include "patricia.h"
 
 
-
 short IsExternal(Tree p) {
     return (p->type == EXTERNAL);
 }
 
 int SelectPath(Index index, Ingredient key, int i) {
     int max_size = (int)strlen(key.name);
-
     int id = (int) index.letter;
     int key_char = (int) key.name[i];
     if (index.position >= max_size || id > key_char) {
