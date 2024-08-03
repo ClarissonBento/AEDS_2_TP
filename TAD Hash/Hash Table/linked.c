@@ -34,12 +34,12 @@ void list_append(Linked_List *list, char *word, int doc_id) {
 }
 
 int is_emptyList(Linked_List *list) {
-    if (list->head == list->tail) return NULL;
+    if (list->head == list->tail) return 1;
 }
 
-void display_list(Linked_List list, int N) { // N = num de chaves
+void display_list(Linked_List *list, int N) { // N = num de chaves
     Node *aux;
-    aux = list.head->next;
+    aux = list->head->next;
     
     while (aux != NULL) {
         printf("%.*s ", N, aux->ingredient_name); // ajustar se necessário

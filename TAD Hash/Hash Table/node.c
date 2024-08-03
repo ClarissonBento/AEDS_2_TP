@@ -21,7 +21,7 @@ Node *createNode(char *word, int id_doc) {
 }
 
 // Verificar esse calculo de hash code depois
-int hashcode(char *word, int *weights, int M) {
+int hash(char *word, int *weights, int M) {
     int hashcode = 0;
     int key_size = strlen(word);
 

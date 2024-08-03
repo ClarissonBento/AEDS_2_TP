@@ -18,7 +18,7 @@ typedef struct Node {
 
 // Cabeçalho de funções
 Node* createNode(char *word, int id_doc);
-int hashcode(char *word, int *pesos, int M);
+int hash(char *word, int *pesos, int M);
 int choosin_M(int number);
 
 #endif

@@ -1,34 +1,75 @@
 #include "HASH.h"
 #include "linked.h"
 
-void Insere(ingredient x, int *weights, Hash_Table table) {
+Node* search_in_hashtable(char *item, int *pesos, Hash_Table table, int M) {
+    int hashcode = hash(item, pesos, M);
+    Node *current = table.linear_list[hashcode];
+
+    while (current != NULL) {
+        if (strcmp(current->ingredient_name, item) == 0) {
+            return current;  // Item encontrado
+        }
+        current = current->next;
+    }
+
+    return NULL;  // Item não encontrado
+}
+
+void insert_in_hashtable(Hash_Table *table, char *word, int id_doc, int *pesos, int M) {
+
+    int hashcode = hash(word, pesos, M);
+    Node *new_node = createNode(word, id_doc);
+
+    if (table->linear_list[hashcode] == NULL) {
+        table->linear_list[hashcode] = new_node;
+
+    } else {
+        Node *current = table->linear_list[hashcode];
+
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = new_node;
+    }
+
+}
+
+// tentei usando a lógica do Ziviani
+void insert_hash_2(char *word, int id_doc, int *weights, Hash_Table *table, int M) {
+
+    if (search_in_hashtable(word, weights, *table, M) == NULL) {
+        list_append(table->linear_list, word, id_doc);
+    } else printf("\nRegistro já existe\n");
     
-    if (Pesquisa(x.name, weights, table) == NULL)
-    List_Append(x, &table[h(x.name, weights)]);
-    else printf(" Registro ja  esta  presente\n");
 } 
 
-void Imprime(Hash_Table *table, int M) {
+// Não tô achando o erro
+void print_hashTable(Hash_Table *table, int M) {
     
     for (int i = 0; i < M; i++) {
         printf("%i: ", i);
 
-        if (!Is_Empty(table->linear_list))
-        Display_List(table[i]->linear_list, MAX_ING);
-        printf("\n");
+        if (is_emptyList(table->linear_list) == 1) {
+            display_list(table->linear_list, MAX_ING);
+            printf("\n");
+        }
         
     }
 
 }
 
-void Hash_Initialize(Hash_Table *table, int M) {
+int is_hashtable_empty(Hash_Table *table) {
+    if (table->num_insertions == 0) return 1;
+}
+
+void hash_initialize(Hash_Table *table, int M) {
 
     for (int i = 0; i < M; i++){
         MakeEmpty_List(&table[i]);
     } 
 }
 
-void GeraPesos(int *pesos, int n) {
+void gera_pesos(int *pesos, int n) {
     int i;
     struct timeval semente;
     gettimeofday(&semente, NULL); 
