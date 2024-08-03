@@ -6,17 +6,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "read.h"
+#include "i_Node.h"
 
 typedef struct Node {  
     ingredient ingredient;
     struct Node *next;
+    i_Node *par;
+
 } Node;
 
 
 
 //funções
 Node* CreateNode(ingredient ing_name);
-int Hash_Code(char *word, int **p, int M);
+int Hash_Code(char *word, int *pesos, int M);
 int Choosin_M(int number);
 
 #endif

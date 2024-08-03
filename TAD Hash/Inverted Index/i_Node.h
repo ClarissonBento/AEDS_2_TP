@@ -1,12 +1,16 @@
 #ifndef I_NODE_H
 #define I_NODE_H
 
-typedef struct i_Node {
-    float num_Occurrence;
-    float ID_document;
-    struct i_Node *next;
+#include <stdio.h>
+#include <stdlib.h>
 
-} i_Node;
+typedef struct index_Node {
+    int Occurrences;
+    int ID_Document;
+    struct index_Node *next;
 
+} index_Node;
+
+index_Node *initialize_indexNode(int documentID);
 
 #endif

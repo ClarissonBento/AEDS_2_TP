@@ -10,12 +10,13 @@ Node* CreateNode(ingredient ing_name) {
     return new_node;
 }
 
-int Hash_Code(char *word, int **p, int M) {
+// Verificar esse calculo de hash code depois
+int Hash_Code(char *word, int *weights, int M) {
     int hashcode = 0;
     int key_size = strlen(word);
 
     for (int i = 0; i < key_size; i++) {
-        hashcode += p[i][(unsigned int)word[i]]; // unsigned int pra garantir que não tenha num negativo
+        hashcode += (unsigned int)word[i] * weights[i]; // unsigned int pra garantir que não tenha num negativo
     }
 
     hashcode = hashcode % M;
@@ -24,11 +25,11 @@ int Hash_Code(char *word, int **p, int M) {
 }
 
 // Função pra calcular o M segundo o Singed(?)
-int Choosin_M(int number) {
+int Choosin_M(int num) {
 
     int twoPow = 0;
 
-    while (pow(2, twoPow) < number) twoPow++;
+    while (pow(2, twoPow) < num) twoPow++;
     
     return (int) pow(2, twoPow);
 }

@@ -1,7 +1,12 @@
+#ifndef I_INDEX_H
+#define I_INDEX_H
+
 #include "i_Node.h"
 
 typedef struct {
-    i_Node *head;
-    i_Node *tail;
+    index_Node *head;
+    index_Node *tail;
 
-} i_Index; // Lista encadeada dos pares
+} index_List; // Lista encadeada dos pares
+
+#endif
