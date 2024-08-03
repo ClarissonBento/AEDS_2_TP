@@ -1,4 +1,6 @@
 #include "i_Node.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 index_Node *initialize_indexNode(int documentID) {
 

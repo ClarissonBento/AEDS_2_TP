@@ -1,4 +1,6 @@
 #include "i_Index.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int insert_indexNode(index_List *list, int documentID) {
 

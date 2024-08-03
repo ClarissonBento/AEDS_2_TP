@@ -2,18 +2,27 @@
 
 // Essas funções são da lista encadeada
 
-void MakeEmpty_List(Linked_List *list) {
-    list->head = (Node *)malloc(sizeof(Node));
-    list->tail = list->head; 
-    list->head->next = NULL;
+Linked_List *initialise_LinkedList() {
+
+    Linked_List *list = (Linked_List *)malloc(sizeof(Linked_List));
+
+    if (list == NULL) {
+        printf("\nErro no linked.c\n");
+        return NULL;
+    }
+
+    list->head = NULL;
+    list->tail = NULL;
+
+    return list;
 }
 
 // Função para adicionar um nó ao final da lista
-void List_Append(Linked_List *list, ingredient ing_name) {
+void list_append(Linked_List *list, char *word, int doc_id) {
 
-    if (list == NULL) return -1;
+    is_emptyList(list);
 
-    Node *new_node = CreateNode(ing_name);
+    Node *new_node = createNode(*word, doc_id); // conferir isso
 
     if (list->head == NULL) {
         list->head = new_node;
@@ -24,22 +33,21 @@ void List_Append(Linked_List *list, ingredient ing_name) {
     }
 }
 
-int Is_Empty(Linked_List list) {
-    if (list.head == list.tail) return 1;
-    else return 0;
+int is_emptyList(Linked_List *list) {
+    if (list->head == list->tail) return NULL;
 }
 
-void Display_List(Linked_List list, int N) { // N = num de chaves
-    Node *Aux;
-    Aux = list.head->next;
+void display_list(Linked_List list, int N) { // N = num de chaves
+    Node *aux;
+    aux = list.head->next;
     
-    while (Aux != NULL) {
-        printf("%.*s ", N, Aux->ingredient.name); // ajustar se necessário
-        Aux = Aux->next;
+    while (aux != NULL) {
+        printf("%.*s ", N, aux->ingredient_name); // ajustar se necessário
+        aux = aux->next;
     }
 }
 
-int List_Count(Linked_List list) {
+int count_list(Linked_List list) {
     int count = 0;
     Node *current = list.head;
     
@@ -51,6 +59,15 @@ int List_Count(Linked_List list) {
     
     return count;
 }
+
+// Esse faz lista fazia talvez seja desnecessário
+/*
+void MakeEmpty_List(Linked_List *list) {
+    list->head = (Node *)malloc(sizeof(Node));
+    list->tail = list->head; 
+    list->head->next = NULL;
+}
+*/
 
 /* Ziviani, talvez tirar
 void List_Insert(ingredient ing_name, Linked_List *Lista) {

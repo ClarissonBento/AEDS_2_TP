@@ -1,17 +1,27 @@
 #include "node.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 //Cria um novo nó
 //colocar tratamento de erros se necessário
-Node* CreateNode(ingredient ing_name) {
-    Node *new_node = (Node*) malloc(sizeof(Node));
-    new_node->ingredient = ing_name;
+Node *createNode(char *word, int id_doc) {
+
+    Node *new_node = (Node*)malloc(sizeof(Node));
+    if (new_node == NULL) {
+        printf("\nFalhou, erro no node.h\n");
+        return NULL;
+    }
+
+    strcpy(new_node->ingredient_name, word);
     new_node->next = NULL;
+    new_node->i_list = initialize_indexList();
+    insert_indexNode(new_node->i_list, id_doc);
 
     return new_node;
 }
 
 // Verificar esse calculo de hash code depois
-int Hash_Code(char *word, int *weights, int M) {
+int hashcode(char *word, int *weights, int M) {
     int hashcode = 0;
     int key_size = strlen(word);
 
@@ -25,7 +35,7 @@ int Hash_Code(char *word, int *weights, int M) {
 }
 
 // Função pra calcular o M segundo o Singed(?)
-int Choosin_M(int num) {
+int choosin_M(int num) {
 
     int twoPow = 0;
 

@@ -7,10 +7,11 @@ typedef struct {
     Node *head, *tail;
 } Linked_List;
 
-void MakeEmpty_List(Linked_List *list);
-void List_Append(Linked_List *list, ingredient ing_name);
-int Is_Empty(Linked_List list);
-void Display_List(Linked_List list, int N_list);
-int List_Count(Linked_List list);
+// Cabeçalho de funções
+Linked_List *initialise_LinkedList();
+void list_append(Linked_List *list, char *word, int doc_id);
+int is_emptyList(Linked_List *list);
+void display_list(Linked_List list, int N);
+int count_list(Linked_List list);
 
 #endif
