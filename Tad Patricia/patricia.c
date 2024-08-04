@@ -1,12 +1,11 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "patricia.h"
 
 
 // LISTA ENCADEADA
 
-
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "patricia.h"
 
 static index_Node *initialize_indexNode(int documentID) {
     /*Função responsável pela inicialização da lista de ocorrência
@@ -309,61 +308,4 @@ void free_tree(Tree p) {
 }
 
 
-
-void InsertFromFile(const char *filename, Tree *patricia, int *com, int doc) {
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        perror("Unable to open file");
-        return;
-    }
-
-    char line[256];
-    while (fgets(line, sizeof(line), file)) {
-        line[strcspn(line, "\n")] = '\0';
-
-        Ingredient t;
-        t.name = strdup(line);
-
-
-
-
-        *patricia = Insert(t, patricia, com, doc, 0);
-
-    }
-
-    fclose(file);
-}
-
-void SearchFromFile(const char *filename, Tree *patricia, int *com) {
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        perror("Unable to open file");
-        return;
-    }
-
-    char line[256];
-    while (fgets(line, sizeof(line), file)) {
-        line[strcspn(line, "\n")] = '\0';
-        Tree temp;
-        Ingredient t;
-        t.name = strdup(line);
-
-        /*if(strcmp(t.name, "cherry") == 0){
-            printf("z\n");
-            Ingredient tst;
-            tst.name = "banana";
-            search(patricia, tst);
-        }*/
-
-
-        temp = search(patricia, t, com, 0);
-        /*if(con > 0){
-            print_tree(*patricia);
-            printf("............................................\n");
-            con = 0;
-        }*/
-    }
-
-    fclose(file);
-}
 
