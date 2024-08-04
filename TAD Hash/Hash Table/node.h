@@ -5,9 +5,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 //#include "read.h"
-#include "i_Node.h"
-#include "i_Index.h"
+#include "../Inverted Index/i_Node.h"
+#include "../Inverted Index/i_Index.h"
 
 typedef struct Node {
     char ingredient_name[50];

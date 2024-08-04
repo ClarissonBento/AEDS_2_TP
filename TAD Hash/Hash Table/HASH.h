@@ -1,7 +1,7 @@
 #ifndef HASH_H
 #define HASH_H
 
-#include "read.h"
+//#include "read.h"
 #include "node.h"
 #include "linked.h"
 #include <sys/time.h>
