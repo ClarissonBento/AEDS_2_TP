@@ -21,6 +21,8 @@ Node *createNode(char *word, int id_doc) {
 }
 
 // Verificar esse calculo de hash code depois
+// Percorre uma palavra letra a letra e um vetor e pesos elemento a elemento
+// Transforma uma palavra num numero
 int hash(char *word, int *weights, int M) {
     int hashcode = 0;
     int key_size = strlen(word);
