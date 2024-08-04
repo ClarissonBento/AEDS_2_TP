@@ -1,7 +1,6 @@
 #include "linked.h"
 
-// Essas funções são da lista encadeada
-
+// Função para inicializar uma nova lista encadeada (das colisões)
 Linked_List *initialise_LinkedList() {
 
     Linked_List *list = (Linked_List *)malloc(sizeof(Linked_List));
@@ -17,14 +16,22 @@ Linked_List *initialise_LinkedList() {
     return list;
 }
 
+// Função para verificar se a lista está vazia
+int is_emptyList(Linked_List *list) {
+    return list->head == NULL;
+}
+
 // Função para adicionar um nó ao final da lista
 void list_append(Linked_List *list, char *word, int doc_id) {
 
-    is_emptyList(list);
+    Node *new_node = createNode(word, doc_id);
 
-    Node *new_node = createNode(*word, doc_id); // conferir isso
+    if (new_node == NULL) {
+        printf("\nErro ao criar um novo nó.\n");
+        return;
+    }
 
-    if (list->head == NULL) {
+    if (is_emptyList(list)) {
         list->head = new_node;
         list->tail = new_node;
     } else {
@@ -33,23 +40,27 @@ void list_append(Linked_List *list, char *word, int doc_id) {
     }
 }
 
-int is_emptyList(Linked_List *list) {
-    if (list->head == list->tail) return 1;
-}
-
+// Printar a lista encadeada das colisões
 void display_list(Linked_List *list, int N) { // N = num de chaves
-    Node *aux;
-    aux = list->head->next;
+
+    if (is_emptyList(list)) {
+        printf("\nLista encadeada vazia.\n");
+        return;
+    }
+
+    Node *aux = list->head;
     
     while (aux != NULL) {
         printf("%.*s ", N, aux->ingredient_name); // ajustar se necessário
         aux = aux->next;
     }
+    printf("\n");
 }
 
-int count_list(Linked_List list) {
+// Função para contar o número de nós na lista
+int count_list(Linked_List *list) {
     int count = 0;
-    Node *current = list.head;
+    Node *current = list->head;
     
     // Percorre a lista até o final
     while (current != NULL) {

@@ -2,6 +2,7 @@
 #define LINKED_H
 
 #include "node.h"
+#include <string.h>
 
 typedef struct {
     Node *head, *tail;

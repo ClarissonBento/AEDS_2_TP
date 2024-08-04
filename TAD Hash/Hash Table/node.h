@@ -6,7 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-//#include "read.h"
+#include <string.h>
+#include <stdbool.h>
 #include "../Inverted Index/i_Node.h"
 #include "../Inverted Index/i_Index.h"
 
