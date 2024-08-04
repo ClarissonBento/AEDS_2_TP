@@ -11,11 +11,9 @@ typedef struct index_Node {
     int Occurrences;
     int ID_Document;
     struct index_Node *next;
-
 } index_Node;
 
 typedef index_Node *Occurences;
-
 
 // PATRICIA
 typedef enum {
@@ -27,9 +25,8 @@ typedef struct Index {
     int position;
 } Index;
 
-
 typedef struct Ingredient {
-    char *name;
+    char name[20];
     Occurences list;
 } Ingredient;
 
@@ -44,6 +41,7 @@ typedef struct pat {
         Ingredient item;
     } node;
 } PatNode;
+
 
 Tree Insert(Ingredient key, Tree *p, int *com, int id_doc, int command);
 Tree search(Tree *p, Ingredient key, int *com, int command);
