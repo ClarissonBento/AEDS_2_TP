@@ -34,12 +34,37 @@ int hash(char *word, int *weights, int M) {
     return hashcode;
 }
 
-// Função pra calcular o M segundo o Singed(?)
+// Sedgewick sugere escolher uma potência de 2 que esteja próxima do valor desejado de M (ou
+// seja, de um valor que seja apropriado para os seus dados). Depois, adote para M o número
+// primo que esteja logo abaixo da potência escolhida.
 int choosin_M(int num) {
-
     int twoPow = 0;
 
+    // Encontra a menor potência de 2 que é maior ou igual ao numero
     while (pow(2, twoPow) < num) twoPow++;
-    
-    return (int) pow(2, twoPow);
+    int power_of_two = (int)pow(2, twoPow);
+
+    // Procura o maior número primo abaixo dessa potência de 2
+    for (int i = power_of_two - 1; i > 1; i--) {
+        if (is_prime(i)) {
+            return i;
+        }
+    }
+
+    return 2; // Caso extremo onde 2 é o maior primo abaixo da potência de 2
+    // Não é necessário pra nossa implementação especificamente
+}
+
+// Função para verificar se um número é primo
+// 1 é true e 0 é false
+int is_prime(int n) {
+    if (n <= 1) return 0;
+    if (n == 2) return 1;
+    if (n % 2 == 0) return 0;
+
+    for (int i = 3; i <= sqrt(n); i += 2) {
+        if (n % i == 0) return 0;
+    }
+
+    return 1;
 }
