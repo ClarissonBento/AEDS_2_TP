@@ -15,10 +15,5 @@ typedef struct ingredient{
 
 
 
-typedef struct teste{
-    int teves;
-    int b;
-
-}teste;
 
 #endif //AEDS_2_TP_READ_H

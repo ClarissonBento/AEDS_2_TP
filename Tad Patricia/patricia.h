@@ -3,7 +3,21 @@
 #ifndef AEDS_2_TP_PATRICIA_H
 #define AEDS_2_TP_PATRICIA_H
 
-#include "read.h"
+
+
+// LLISTA
+
+typedef struct index_Node {
+    int Occurrences;
+    int ID_Document;
+    struct index_Node *next;
+
+} index_Node;
+
+typedef index_Node *Occurences;
+
+
+// PATRICIA
 typedef enum {
     INTERNAL, EXTERNAL
 } NodeType;
@@ -13,11 +27,11 @@ typedef struct Index {
     int position;
 } Index;
 
+
 typedef struct Ingredient {
     char *name;
+    Occurences list;
 } Ingredient;
-
-typedef char *IngredientType;
 
 typedef struct pat *Tree;
 typedef struct pat {
@@ -31,11 +45,10 @@ typedef struct pat {
     } node;
 } PatNode;
 
-
-
-Tree Insert(Ingredient key, Tree *p);
-Tree search(Tree *p, Ingredient key);
+Tree Insert(Ingredient key, Tree *p, int *com, int id_doc, int command);
+Tree search(Tree *p, Ingredient key, int *com, int command);
 void print_tree(Tree p);
+void free_tree(Tree p);
 
 
 
