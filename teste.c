@@ -1,10 +1,11 @@
-#include <stdio.h>
-#include <string.h>
 #include "./TAD Hash/Hash Table/HASH.h"
 #include "./TAD Hash/Hash Table/linked.h"
 #include "./TAD Hash/Hash Table/node.h"
 #include "./TAD Hash/Inverted Index/i_Index.h"
 #include "./TAD Hash/Inverted Index/i_Node.h"
+
+#include <stdio.h>
+#include <string.h>
 
 void hash_initialize(Hash_Table *table, int M);
 

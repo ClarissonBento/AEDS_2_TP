@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "i_index.h": "c",
+        "i_node.h": "c"
+    }
+}

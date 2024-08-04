@@ -61,13 +61,12 @@ int count_list(Linked_List list) {
 }
 
 // Esse faz lista fazia talvez seja desnecessário
-/*
+
 void MakeEmpty_List(Linked_List *list) {
     list->head = (Node *)malloc(sizeof(Node));
     list->tail = list->head; 
     list->head->next = NULL;
 }
-*/
 
 /* Ziviani, talvez tirar
 void List_Insert(ingredient ing_name, Linked_List *Lista) {
