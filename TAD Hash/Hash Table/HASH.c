@@ -34,6 +34,34 @@ Node *search_in_hashtable(char *item, int *weights, Hash_Table *table, int M, in
     return NULL;  // Item não encontrado
 }
 
+void search_and_print_hashtable(char *item, Hash_Table *table, int M) {
+    int found = 0;
+
+    for (int i = 0; i < M; i++) {
+        Node *current = table->linear_list[i]->head;
+
+        while (current != NULL) {
+            if (strcmp(current->ingredient_name, item) == 0) {
+                found = 1;
+                printf("Ingrediente: %s\n", current->ingredient_name);
+                index_Node *index_current = current->i_list->head;
+                while (index_current != NULL) {
+                    printf("  Documento ID: %d, Ocorrências: %d\n", 
+                           index_current->ID_Document,
+                           index_current->Occurrences);
+                    index_current = index_current->next;
+                }
+                printf("\n");
+            }
+            current = current->next;
+        }
+    }
+
+    if (!found) {
+        printf("Ingrediente %s não encontrado na tabela hash.\n", item);
+    }
+}
+
 // Função para inserir um item na tabela hash
 void insert_in_hashtable(Hash_Table *table, char *word, int id_doc, int *weights, int M, int *count) {
 

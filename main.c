@@ -28,26 +28,7 @@ int main() {
     insert_in_hashtable(&table, "Ouro", 3, table.weights, M, &col);
     insert_in_hashtable(&table, "Terra", 4, table.weights, M, &col);
 
-    // Buscando elementos na tabela hash
-    Node *result = search_in_hashtable("Marte", table.weights, &table, M, &com);
-    if (result != NULL) {
-        printf("Encontrado: %s, Documento ID: %d, Ocorrências: %d\n", 
-               result->ingredient_name, 
-               result->i_list->head->ID_Document,
-               result->i_list->head->Occurrences);
-    } else {
-        printf("Busca falhou\n");
-    }
-
-    result = search_in_hashtable("Teste", table.weights, &table, M, &com);
-    if (result != NULL) {
-        printf("Encontrado: %s, Documento ID: %d, Ocorrências: %d\n", 
-               result->ingredient_name, 
-               result->i_list->head->ID_Document,
-               result->i_list->head->Occurrences);
-    } else {
-        printf("Busca falhou 2\n");
-    }
+    search_and_print_hashtable("Marte", &table, M);
 
     // Imprimindo a tabela hash
     print_hashTable(&table, M);
@@ -58,4 +39,32 @@ int main() {
     printf("Total de comparações: %i\n", com);
 
     return 0;
+}
+
+// Função para buscar um item na tabela hash
+Node *search_in_hashtable(char *item, int *weights, Hash_Table *table, int M, int *count) {
+
+    (*count) = 0;
+
+    int hashcode = hash(item, weights, M);
+    Node *cabess = table->linear_list[hashcode]->head;
+    Node *rabo = table->linear_list[hashcode]->tail;
+
+    while (cabess != NULL) {
+        (*count)++;
+        
+        if (strcmp(cabess->ingredient_name, item) == 0) {
+
+            printf("Encontrado: %s, Documento ID: %d, Ocorrências: %d\n", 
+               cabess->ingredient_name, 
+               cabess->i_list->head->ID_Document,
+               cabess->i_list->head->Occurrences);
+            
+            return cabess;  // Item encontrado
+               
+        }
+        cabess = cabess->next;
+    }
+
+    return NULL;  // Item não encontrado
 }

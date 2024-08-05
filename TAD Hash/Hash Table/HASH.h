@@ -25,5 +25,6 @@ int is_hashtable_empty(Hash_Table *table);
 void hash_initialize(Hash_Table *table, int M);
 void gera_pesos(int *pesos, int n);
 void free_table(Hash_Table *table);
+void search_and_print_hashtable(char *item, Hash_Table *table, int M);
 
 #endif
