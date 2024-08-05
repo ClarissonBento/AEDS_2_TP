@@ -1,7 +1,7 @@
 #include "linked.h"
 
 // Função para inicializar uma nova lista encadeada (das colisões)
-Linked_List *initialise_LinkedList() {
+Linked_List *initialize_LinkedList() {
 
     Linked_List *list = (Linked_List *)malloc(sizeof(Linked_List));
 

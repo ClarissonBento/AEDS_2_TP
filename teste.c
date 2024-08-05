@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include <string.h>
-
+/*
 void hash_initialize(Hash_Table *table, int M);
 
 int main(){
@@ -16,7 +16,7 @@ int main(){
     int pesos[50]; // vetor de pesos
 
     int M; // o valor primo ideal
-    M = choosin_M(N);
+    M = choose_M(N);
 
     hash_initialize(table, M);
     is_hashtable_empty(table);
@@ -38,3 +38,4 @@ int main(){
 
     return 0; 
 }
+*/

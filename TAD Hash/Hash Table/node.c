@@ -59,7 +59,7 @@ int is_prime(int n) {
 // Sedgewick sugere escolher uma potência de 2 que esteja próxima do valor desejado de M (ou
 // seja, de um valor que seja apropriado para os seus dados). Depois, adote para M o número
 // primo que esteja logo abaixo da potência escolhida.
-int choosin_M(int num) {
+int choose_M(int num) {
     int twoPow = 0;
 
     // Encontra a menor potência de 2 que é maior ou igual ao numero

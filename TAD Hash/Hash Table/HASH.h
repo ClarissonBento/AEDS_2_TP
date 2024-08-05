@@ -5,6 +5,7 @@
 #include "node.h"
 #include "linked.h"
 #include <sys/time.h>
+#include <string.h>
 
 typedef struct Hash_Table {
 
@@ -16,7 +17,7 @@ typedef struct Hash_Table {
 } Hash_Table;
 
 // Cabeçalho de funções
-Node* search_in_hashtable(char *item, int *pesos, Hash_Table table, int M);
+Node* search_in_hashtable(char *item, int *weights, Hash_Table *table, int M);
 void insert_in_hashtable(Hash_Table *table, char *word, int id_doc, int *pesos, int M);
 void insert_hash_2(char *word, int id_doc, int *weights, Hash_Table *table, int M);
 void print_hashTable(Hash_Table *table, int M);

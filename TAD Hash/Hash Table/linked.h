@@ -9,11 +9,11 @@ typedef struct {
 } Linked_List;
 
 // Cabeçalho de funções
-Linked_List *initialise_LinkedList();
+Linked_List *initialize_LinkedList();
 void list_append(Linked_List *list, char *word, int doc_id);
 int is_emptyList(Linked_List *list);
 void display_list(Linked_List *list, int N);
-int count_list(Linked_List list);
+int count_list(Linked_List *list);
 void MakeEmpty_List(Linked_List *list);
 
 #endif
