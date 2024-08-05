@@ -341,18 +341,19 @@ static double wij(Tree p, char *term, int doc_number){
 }
 
 
-static void selection_sort(double *arr, int n) {
+
+void selection_sort(double *arr, int n) {
     int i, j, min_idx;
     double temp;
 
     for (i = 0; i < n - 1; i++) {
         min_idx = i;
         for (j = i + 1; j < n; j++) {
-            if (arr[j] < arr[min_idx]) { // Ordenar em ordem crescente
+            if (arr[j] > arr[min_idx]) { // Ordenar em ordem decrescente
                 min_idx = j;
             }
         }
-        // Troca o menor elemento encontrado com o primeiro elemento
+
         temp = arr[min_idx];
         arr[min_idx] = arr[i];
         arr[i] = temp;
@@ -381,9 +382,9 @@ void tf_idf(char *words[], Tree patricia, int qtd_terms){
 
     selection_sort(doc_relevance, N);
     printf("Documentos mais relevantes: \n");
-    for(int i = 0; i < N; i++){
+    for(int i = N; i > 0; i--){
         if(doc_relevance[i] > 0){
-            printf("Documento %d: %.2f \n",i+1,  doc_relevance[i]);
+            printf("Documento %d: %.2f \n",i ,  doc_relevance[i]);
         }
 
     }

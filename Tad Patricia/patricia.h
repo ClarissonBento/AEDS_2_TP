@@ -7,6 +7,12 @@
 
 // LLISTA
 
+typedef struct TF_IDF{
+    int ID_doc;
+    double TF_IDF;
+}TF_IDF;
+
+
 typedef struct index_Node {
     int Occurrences;
     int ID_Document;
