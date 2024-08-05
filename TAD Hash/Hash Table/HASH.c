@@ -16,10 +16,10 @@ void hash_initialize(Hash_Table *table, int M) {
 }
 
 // Função para buscar um item na tabela hash
-Node* search_in_hashtable(char *item, int *weights, Hash_Table *table, int M, int *count) {
+Node *search_in_hashtable(char *item, int *weights, Hash_Table *table, int M, int *count) {
 
     (*count) = 0;
-    
+
     int hashcode = hash(item, weights, M);
     Node *current = table->linear_list[hashcode]->head;
 

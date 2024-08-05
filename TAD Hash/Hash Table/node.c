@@ -35,6 +35,7 @@ int hash(char *word, int *weights, int M) {
 
     for (int i = 0; i < key_size; i++) {
         hashcode += (unsigned int)word[i] * weights[i]; // unsigned int pra garantir que não tenha num negativo
+        //hashcode += (unsigned int)word[i] * weights[i % M];
     }
 
     hashcode = hashcode % M;
