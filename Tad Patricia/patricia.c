@@ -375,7 +375,6 @@ void tf_idf(char *words[], Tree patricia, int qtd_terms){
             w += wij(patricia, words[k], j);
         }
         ri = ri * w;
-        printf("Relevancia do documento %d: %f\n", j, ri);
         doc_relevance[j - 1] = ri; // salva a relevancia do documento na posição doc_number - 1
         w = 0;
     }
@@ -383,7 +382,10 @@ void tf_idf(char *words[], Tree patricia, int qtd_terms){
     selection_sort(doc_relevance, N);
     printf("Documentos mais relevantes: \n");
     for(int i = 0; i < N; i++){
-        printf("Documento %d: %.2f \n",i+1,  doc_relevance[i]);
+        if(doc_relevance[i] > 0){
+            printf("Documento %d: %.2f \n",i+1,  doc_relevance[i]);
+        }
+
     }
     printf("\n");
     return;
