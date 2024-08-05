@@ -44,10 +44,11 @@ typedef struct pat {
 
 
 Tree Insert(Ingredient key, Tree *p, int *com, int id_doc, int command);
-Tree search(Tree *p, Ingredient key, int *com, int command);
+Tree search(Tree *p, char *name);
 void print_tree(Tree p);
 void free_tree(Tree p);
-
+void tf_idf(char *words[], Tree patricia, int qtd_terms);
+Tree search_performace(Tree *p, char *name, int *com, int command);
 
 
 #endif //AEDS_2_TP_PATRICIA_H

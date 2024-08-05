@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 #include "patricia.h"
-
+#define N 2  // Colocar a quantidade de documentos
 
 
 // LISTA ENCADEADA
@@ -190,11 +191,33 @@ Tree Insert(Ingredient key, Tree *p, int *com, int id_doc, int command) {
     return temp;
 }
 
-Tree search(Tree *p, Ingredient key, int *com, int command) {
+Tree search(Tree *p, char *name) {
     /* Função responsável pela busca de uma palavra solicitada. caso encontrada, ela retorna com o endereço do no onde a palavra está */
     Tree temp = *p;
     while (!IsExternal(temp)) {
-        if (Path(temp->node.InternalNode.index, key.name)) {
+        if (Path(temp->node.InternalNode.index, name)) {
+            temp = temp->node.InternalNode.right;
+
+        } else {
+            temp = temp->node.InternalNode.left;
+
+        }
+    }
+    if (strcmp(temp->node.item.name, name) == 0) {
+        return temp;
+
+    } else {
+        printf("Palavra %s não encontrada, \n", name);
+
+        return NULL;
+    }
+}
+
+Tree search_performace(Tree *p, char *name, int *com, int command) {
+    // Função para testar numero de comparações feitas na busca
+    Tree temp = *p;
+    while (!IsExternal(temp)) {
+        if (Path(temp->node.InternalNode.index, name)) {
             temp = temp->node.InternalNode.right;
             (*com)++;
         } else {
@@ -202,16 +225,17 @@ Tree search(Tree *p, Ingredient key, int *com, int command) {
             (*com)++;
         }
     }
-    if (strcmp(temp->node.item.name, key.name) == 0) {
+    if (strcmp(temp->node.item.name, name) == 0) {
         if (command == 1) {
-            printf("Palavra %s  encontrada, foram necessária(s) %d comparações\n", key.name, *com);
+            printf("Palavra %s  encontrada, foram necessária(s) %d comparações\n", name, *com);
             (*com) = 0;
             return temp;
         } else {
             return temp;
         }
     } else {
-        printf("Palavra %s não encontrada, \n", key.name);
+        printf("Palavra %s não encontrada, \n", name);
+        (*com) = 0;
         return NULL;
     }
 }
@@ -265,3 +289,103 @@ void free_tree(Tree p) {
 }
 
 
+// TF-IDF
+
+static void patricia_get_terms(Tree p, int *ni) {
+    if (p == NULL) {
+        return;
+    }
+    if (IsExternal(p)) {
+        Occurences current = p->node.item.list;
+        while (current != NULL) {
+            ni[current->ID_Document]++;
+            current = current->next;
+        }
+        return;
+    } else {
+        patricia_get_terms(p->node.InternalNode.left, ni);
+        patricia_get_terms(p->node.InternalNode.right, ni);
+        return;
+    }
+}
+
+
+static int patricia_get_dj(Tree patricia, char *term){
+    Tree temp = search(&patricia, term);
+    int cont = 0;
+    Occurences current = temp->node.item.list;
+    while (current != NULL) {
+        cont++;
+        current = current->next;
+    }
+    return cont;
+}
+
+static double wij(Tree p, char *term, int doc_number){
+    Tree temp = search(&p, term);
+    int fij = 0;
+    if(temp == NULL){
+        return 0;
+    }
+    Occurences  temp2 = temp->node.item.list;
+    while(temp2 != NULL){
+        if(temp2->ID_Document == doc_number){
+            fij = temp2->Occurrences;
+            break;
+        }
+        temp2 = temp2->next;
+    }
+    int dj = patricia_get_dj(p, term);
+    double  w = fij * log2(N)/dj;
+    return w;
+}
+
+
+static void selection_sort(double *arr, int n) {
+    int i, j, min_idx;
+    double temp;
+
+    for (i = 0; i < n - 1; i++) {
+        min_idx = i;
+        for (j = i + 1; j < n; j++) {
+            if (arr[j] < arr[min_idx]) { // Ordenar em ordem crescente
+                min_idx = j;
+            }
+        }
+        // Troca o menor elemento encontrado com o primeiro elemento
+        temp = arr[min_idx];
+        arr[min_idx] = arr[i];
+        arr[i] = temp;
+    }
+}
+
+
+
+void tf_idf(char *words[], Tree patricia, int qtd_terms){
+    double doc_relevance[N] = {0};
+    double ri = 0, w = 0;
+    int ni[N+1];
+    for(int i =0; i < N; i++) ni[i+1] = 0;
+    patricia_get_terms(patricia, ni);
+
+
+    for(int j =1; j < N+1; j++){
+        ri = 1.0/ni[j];
+        for(int k =0; k < qtd_terms; k++){
+            w += wij(patricia, words[k], j);
+        }
+        ri = ri * w;
+        printf("Relevancia do documento %d: %f\n", j, ri);
+        doc_relevance[j - 1] = ri; // salva a relevancia do documento na posição doc_number - 1
+        w = 0;
+    }
+
+    selection_sort(doc_relevance, N);
+    printf("Documentos mais relevantes: \n");
+    for(int i = 0; i < N; i++){
+        printf("Documento %d: %.2f \n",i+1,  doc_relevance[i]);
+    }
+    printf("\n");
+    return;
+
+}
