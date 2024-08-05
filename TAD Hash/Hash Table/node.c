@@ -15,6 +15,12 @@ Node *createNode(char *word, int id_doc) {
     strcpy(new_node->ingredient_name, word);
     new_node->next = NULL;
     new_node->i_list = initialize_indexList();
+
+    if (new_node->i_list == NULL) {
+        free(new_node);
+        return NULL;
+    }
+
     insert_indexNode(new_node->i_list, id_doc);
 
     return new_node;
@@ -36,6 +42,20 @@ int hash(char *word, int *weights, int M) {
     return hashcode;
 }
 
+// Função para verificar se um número é primo
+// 1 é true e 0 é false
+int is_prime(int n) {
+    if (n <= 1) return false;
+    if (n == 2) return true;
+    if (n % 2 == 0) return false;
+
+    for (int i = 3; i <= sqrt(n); i += 2) {
+        if (n % i == 0) return false;
+    }
+
+    return true;
+}
+
 // Sedgewick sugere escolher uma potência de 2 que esteja próxima do valor desejado de M (ou
 // seja, de um valor que seja apropriado para os seus dados). Depois, adote para M o número
 // primo que esteja logo abaixo da potência escolhida.
@@ -55,18 +75,4 @@ int choosin_M(int num) {
 
     return 2; // Caso extremo onde 2 é o maior primo abaixo da potência de 2
     // Não é necessário pra nossa implementação especificamente
-}
-
-// Função para verificar se um número é primo
-// 1 é true e 0 é false
-int is_prime(int n) {
-    if (n <= 1) return 0;
-    if (n == 2) return 1;
-    if (n % 2 == 0) return 0;
-
-    for (int i = 3; i <= sqrt(n); i += 2) {
-        if (n % i == 0) return 0;
-    }
-
-    return 1;
 }

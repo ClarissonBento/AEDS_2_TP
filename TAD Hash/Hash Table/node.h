@@ -5,9 +5,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-//#include "read.h"
-#include "i_Node.h"
-#include "i_Index.h"
+#include <math.h>
+#include <string.h>
+#include <stdbool.h>
+#include "../Inverted Index/i_Node.h"
+#include "../Inverted Index/i_Index.h"
 
 typedef struct Node {
     char ingredient_name[50];
@@ -17,8 +19,9 @@ typedef struct Node {
 } Node;
 
 // Cabeçalho de funções
-Node* createNode(char *word, int id_doc);
-int hash(char *word, int *pesos, int M);
-int choosin_M(int number);
+Node *createNode(char *word, int id_doc);
+int hash(char *word, int *weights, int M);
+int choosin_M(int num);
+int is_prime(int n);
 
 #endif

@@ -9,7 +9,7 @@ typedef struct {
     index_Node *head;
     index_Node *tail;
 
-} index_List; // Lista encadeada dos pares
+} index_List; // Lista encadeada dos pares do indice invertido
 
 // Cabeçalho de funções
 int insert_indexNode(index_List *list, int documentID);

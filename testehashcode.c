@@ -3,7 +3,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include <math.h>
-
+/*
 // Função para verificar se um número é primo
 // 1 é true e 0 é false
 int is_prime(int n) {
@@ -92,3 +92,4 @@ int main(){
     printf("\n");
     
 }
+*/
