@@ -41,18 +41,23 @@ void list_append(Linked_List *list, char *word, int doc_id) {
 }
 
 // Printar a lista encadeada das colisões
-void display_list(Linked_List *list, int N) { // N = num de chaves
-
+void display_list(Linked_List *list, int N) {
     if (is_emptyList(list)) {
-        printf("\nLista encadeada vazia.\n");
+        printf("\nLista encadeada está vazia.\n");
         return;
     }
 
     Node *aux = list->head;
-    
+
     while (aux != NULL) {
-        printf("%.*s | ", N, aux->ingredient_name); // ajustar se necessário
+        printf("%.*s ", N, aux->ingredient_name);
+        index_Node *index = aux->i_list->head;
+        while (index != NULL) {
+            printf("(Doc ID: %d, Ocorrências: %d) - ", index->ID_Document, index->Occurrences);
+            index = index->next;
+        }
         aux = aux->next;
+        //printf(" | ");
     }
     printf("\n");
 }
