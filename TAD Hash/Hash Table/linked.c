@@ -51,7 +51,7 @@ void display_list(Linked_List *list, int N) { // N = num de chaves
     Node *aux = list->head;
     
     while (aux != NULL) {
-        printf("%.*s ", N, aux->ingredient_name); // ajustar se necessário
+        printf("%.*s | ", N, aux->ingredient_name); // ajustar se necessário
         aux = aux->next;
     }
     printf("\n");

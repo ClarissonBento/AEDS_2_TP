@@ -25,23 +25,20 @@ int main() {
     // Buscando elementos na tabela hash
     Node *result = search_in_hashtable("Tomate", table.weights, &table, M);
     if (result != NULL) {
-        printf("Encontrado: %s, Documento ID: %d\n", result->ingredient_name, result->i_list->head->ID_Document);
+        printf("Encontrado: %s, Documento ID: %i\n", result->ingredient_name, result->i_list->head->ID_Document);
     } else {
         printf("Tomate não encontrado.\n");
     }
 
     result = search_in_hashtable("HallsPreto", table.weights, &table, M);
     if (result != NULL) {
-        printf("Encontrado: %s, Documento ID: %d\n", result->ingredient_name, result->i_list->head->ID_Document);
+        printf("Encontrado: %s, Documento ID: %i\n", result->ingredient_name, result->i_list->head->ID_Document);
     } else {
         printf("HallsPreto não encontrado.\n");
     }
 
     // Imprimindo a tabela hash
     print_hashTable(&table, M);
-
-    // Liberando a memória da tabela hash
-    free_table(&table);
 
     return 0;
 }

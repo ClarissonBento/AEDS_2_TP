@@ -69,9 +69,9 @@ void print_hashTable(Hash_Table *table, int M) {
         printf("%i: ", i);
         if (!is_emptyList(table->linear_list[i])) {
             display_list(table->linear_list[i], MAX_ING);
-            printf("\n");
+            //printf("\n");
         } else {
-            printf("Lista vazia\n");
+            printf("Bucket vazio\n");
         }
     }
 }
