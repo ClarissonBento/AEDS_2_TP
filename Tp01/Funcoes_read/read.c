@@ -1,9 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include "lista.c"
-#include "lista.h"
-#include "patricia.c"
-#include "patricia.h"
+#include "read.h"
 
 int tolower(int c);
 
@@ -30,7 +25,7 @@ void ApagarCaracter(char *str, int n) { //Funcao que recebe a string e o valor d
 void Recorrencia(char* str, char* nomeArq, Tree* patricia, Ingredient ing, int id_doc){ 
     FILE* arq; //Ponteiro para o elemento arquivo
     char linha[1000]; //String para receber a terceira linha do arquivo, modo de preparo
-    int tam1,tam2,cont,j,com; //Variaveis de tamanho para realizar a comparacao de strings
+    int tam1,tam2,cont,j,com=1; //Variaveis de tamanho para realizar a comparacao de strings
 
     arq = fopen(nomeArq, "r"); //Abre arquivo atual recebido
 
@@ -41,7 +36,6 @@ void Recorrencia(char* str, char* nomeArq, Tree* patricia, Ingredient ing, int i
 
     tam1 = strlen(linha); //Tamanho 1 da string que contem a terceira linha
     tam2 = strlen(str); //Tamanho 2 da string que contem a palavra a ser contada
-    printf("TAM:%d\n",tam2);
     
     for (int i=0; i < tam1;){ //Loop percorre a linha buscando a palavra desejada
         j = 0; //J conta o indice da palavra desejada, quando encontrada
@@ -59,7 +53,6 @@ void Recorrencia(char* str, char* nomeArq, Tree* patricia, Ingredient ing, int i
         }
     }    
 
-    printf("D:%s\n\n",linha);
     fclose(arq); //Fecha o arquivo
     //return r;
 }
@@ -72,7 +65,7 @@ void LeArquivo(ListaEncadeada list, Tree* patricia){
     char nomeArq[50]; //String para nome do arquivo a ser lido por vez
     Apontador ptr_celula = list.primeiro->proximo;
     Ingredient ing; 
-    int id_doc = 1,com;
+    int id_doc = 1,com=0;
     
     ImprimeLista(list);
     for(int i=1; ptr_celula != NULL; i++){
@@ -83,15 +76,12 @@ void LeArquivo(ListaEncadeada list, Tree* patricia){
                 return;
             }
 
-        printf("\n\nARQUIVO %d:\n\n",i);
         fgets(receitas, 150, arq); //Le a primeira linha do arquivo, o titulo, e o ignora
         fgets(receitas, 150, arq); //Le a segunda linha do arquivo, os ingredientes e os salva
-        printf("%s", receitas);
         
         item = strtok(receitas, ";"); //Separa os ingredientes da segunda linha pelo caractere ";"
         strcpy(ingrediente, item); //Copia o conteudo do token, item, na string, ingrediente para poder ser modificada
         LowerCase(ingrediente); //Transforma todos caracteres da string em letras minusculas
-        printf("A:%s\nB:%d\n", ingrediente, id_doc);
         strcpy(ing.name, ingrediente);
         *patricia = Insert(ing, patricia, &com, id_doc, 1);
         Recorrencia(ingrediente,nomeArq,patricia,ing,id_doc); //Chama a funcao recorrencia, que conta quantas vezes o ingrediente aparece no arquivo
@@ -105,19 +95,17 @@ void LeArquivo(ListaEncadeada list, Tree* patricia){
                 ApagarCaracter(ingrediente, (strlen(ingrediente))); //Apagar o ultimo caractere do ingrediente, sempre vindo como "." ao final da segunda linha
             }
             strcpy(ing.name, ingrediente);
-            printf("A:%s\nB:%d\n", ingrediente, id_doc);
             *patricia = Insert(ing, patricia, &com, id_doc, 1);
             Recorrencia(ingrediente,nomeArq,patricia,ing,id_doc); //Chama a funcao recorrencia, que conta quantas vezes o ingrediente aparece no arquivo 
         }
         
-        printf("AQUI\n");
         fclose(arq); //Fecha o arquivo
         id_doc++;
         ptr_celula = ptr_celula->proximo;
     }
 }
 
-void RecebeEntrada(ListaEncadeada* list){
+void RecebeEntrada(ListaEncadeada* list){ //Le arquivo de entrada
     int n_files;
     char files[3];
     Item item;
@@ -142,42 +130,13 @@ void RecebeEntrada(ListaEncadeada* list){
     }
 }
 
-
-int main(){
-    int op=1;
-    ListaEncadeada file_list;
-    Tree patricia = NULL;
+void BuscarTads(Tree patricia){ //Recebe o as palavras a serem pesquisadas, as procura na patricia, e calcula sua relevancia
     int n_terms;
-    char words[100];
+    char words[300];
     char* item;
     char s_word[40];
-    
-    printf("AQUI:\n\n");
-    InicializaLista(&file_list);
-    
-    do{
-        printf("0- Sair\n1- Ler o arquivo de entrada\n2- Construir os indices invertidos com Patricia e HASH\n3- Imprimir os indices invertidos\n4- Realizar busca de termos, separados por '/'\n");
-        scanf(" %d", &op);
 
-        switch(op){
-        case 0:
-            break;
-        case 1:
-            RecebeEntrada(&file_list);
-            ImprimeLista(file_list);
-            break;
-        case 2:
-            //Construir Patricia e HASH;
-            LeArquivo(file_list, &patricia);
-            print_tree(patricia);
-            break;
-        case 3:
-            //Imprimir indices invertidos;
-
-            break;
-        case 4:
-            //Busca de termos nos TADS
-            printf("Digitar o numero de termos:\n");
+    printf("Digitar o numero de termos:\n");
             scanf("%d ", &n_terms);
             printf("Digite as palavras separadas por \"/\":\n");
             fgets(words, sizeof(words), stdin);
@@ -188,17 +147,14 @@ int main(){
             string_array = malloc(n_terms * sizeof(char*));
             
             item = strtok(words, "/");
-            for(int i=0; item != NULL; i++){
+            for(int i=0; item != NULL; i++){ //Transforma as palavras lidas separadas por "/", em um vetor de strings
                 strcpy(s_word, item);
                 string_array[i] = malloc((sizeof(s_word)+1) * sizeof(char));
                 strcpy(string_array[i],s_word);
                 item = strtok(NULL, "/");
             }
-            tf_idf(string_array, patricia, n_terms);
-            break;
-        }
-    }while(op != 0);
+            tf_idf(string_array, patricia, n_terms); //Chama a funcao de calculo da relevancia
     
-    DestroiLista(&file_list);
-    return 0;
-}   
+
+
+}

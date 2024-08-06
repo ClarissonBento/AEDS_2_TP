@@ -25,7 +25,6 @@ void ImprimeLista(ListaEncadeada lista){ //Imprimir os elementos da lista
         return;
     }
     while(ptr_celula != NULL){ //Enquando o ponteiro apontar para uma celula existente, ou nao nula
-        printf("A:%s\n", ptr_celula->elemento.fileName); //Printar o elemento do ponteiro atual
         ptr_celula = ptr_celula->proximo; //Ponteiro apontar para a proxima celula
     }
 }
